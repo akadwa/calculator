@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Tektur:wght@400;500;600;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Tektur', cursive;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #360033, #0b8793)
+}
+
+button {
+  font-size: 1.4rem;
+  font-weight: 500;
+  padding: 0.6rem;
+  border: 0.15rem solid black;
+  border-radius: 0.5rem;
+  background-color: rgba(230, 230, 230, 1);
+}
+
+button:hover {
+  background-color: rgba(230, 230, 230, 0.75);
+}
+
+button:active {
+  background-color: rgb(230, 230, 230, 0.55);
+}
+
+.calculator-container {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.8rem;
+  border: 0.25rem solid black;
+  background-color: #8a8a8a;
+}
+
+.previous-display,
+.current-display {
+  font-weight: 600;
+  text-align: right;
+  min-width: 20rem;
+  background-color: #e6e6e6;
+  border: 0.2rem solid black;
+}
+
+.previous-display {
+  border-top-left-radius: 0.4rem;
+  border-top-right-radius: 0.4rem;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem 0;
+  border-bottom: none;
+}
+
+.current-display {
+  border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
+  font-size: 3.5rem;
+  padding: 0 1rem 0.5rem;
+  margin-bottom: 1rem;
+  border-top: none;
+}
+
+.button-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-content: stretch;
+  grid-gap: 1rem;
+}
+
+#del-btn {
+  grid-column: 3 / 5;
+  background-color: rgba(11, 135, 147, 0.4);
+}
+
+#del-btn:hover {
+  background-color: rgba(11, 135, 147, 0.7);
+}
+
+#del-btn:active {
+  background-color: rgba(11, 135, 147, 1);
+}
+
+#ac-btn {
+  grid-column: 1 / 3;
+  background-color: rgba(132, 32, 127, 0.4);
+}
+
+#ac-btn:hover {
+  background-color: rgba(132, 32, 127, 0.7);
+}
+
+#ac-btn:active {
+  background-color: rgba(132, 32, 127, 1);
+}
