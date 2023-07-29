@@ -10,6 +10,7 @@
 body {
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   background: linear-gradient(to right, #360033, #0b8793)
@@ -99,4 +100,29 @@ button:active {
 
 #clear-btn:active {
   background-color: rgba(132, 32, 127, 1);
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+}
+
+.footer-text {
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  background: -webkit-linear-gradient(#eee, #9b9b9b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fa-github {
+  color: #eee;
+  margin-left: 0.3rem;
 }

@@ -7,6 +7,7 @@ const equalsButton = document.querySelector('#equals-btn');
 const pointButton = document.querySelector('#point-btn');
 const clearButton = document.querySelector('#clear-btn');
 const delButton = document.querySelector('#del-btn');
+const year = document.querySelector('#year');
 
 
 // Variables
@@ -75,15 +76,6 @@ const populateCurrentDisplay = (button) => {
   currentDisplay.innerHTML = currentDisplayValue;
 }
 
-// disablePointButton - disables the point from being used more than once per inputted number
-const disablePointButton = () => {
-  pointButton.addEventListener("click", () => {
-    if (currentDisplay.innerHTML.includes(".")) {
-      pointButton.disabled = true;
-    }
-  })
-}
-
 // populatePreviousDisplay - moves the numbers from the current display into the previous display, sets that number as operand1 and then readies the current display for operand2 to be inputted
 const populatePreviousDisplay = (button) => {
   if (previousDisplay.innerHTML === "&nbsp;" || operand1 === undefined) {
@@ -91,15 +83,18 @@ const populatePreviousDisplay = (button) => {
     operand1 = Number(currentDisplay.innerHTML);
     operator = button.value;
     currentDisplayValue = 0;
-  } else if (previousDisplay.innerHTML === `${operand1} ${operator} ${operand2} =` || operator === undefined) {
-    if (currentDisplayValue.innerHTML === result.toString()) {
+    pointButton.disabled = false;
+  } else if (previousDisplay.innerHTML === `${operand1} ${operator} ${operand2} =` || operator === undefined || result) {
+    if (currentDisplay.innerHTML === result.toString()) {
       previousDisplay.innerHTML = `${result} ${button.value}`;
+      pointButton.disabled = false;
     } else {
       previousDisplay.innerHTML = `${currentDisplayValue} ${button.value}`;
     }
     operand1 = Number(currentDisplay.innerHTML);
     operator = button.value;
     currentDisplayValue = 0;
+    pointButton.disabled = false;
   }
 }
 
@@ -141,6 +136,11 @@ const clearCalculator = () => {
 // deleteNumber - removes the last number from the current display
 const deleteNumber = () => {
   let newNumber = currentDisplay.innerHTML.slice(0, -1);
+
+  if (!newNumber.includes(".")) {
+    pointButton.disabled = false;
+  }
+
   currentDisplayValue = Number(newNumber);
   if (newNumber.length === 0) {
     currentDisplay.innerHTML = "0";
@@ -149,6 +149,24 @@ const deleteNumber = () => {
   }
 }
 
+// disablePointButton - disables the point from being used more than once per inputted number
+const disablePointButton = () => {
+  if (currentDisplay.innerHTML.includes(".")) {
+    pointButton.disabled = true;
+  } else {
+    pointButton.disabled = false;
+  }
+}
+
+
+// displayYear - gets the current year to be displayed in the footer
+const displayYear = () => {
+  let date = new Date();
+  year.innerHTML = date.getFullYear();
+}
+
+
+// EventListeners
 numberButtons.forEach(btn => btn.addEventListener("click", () => {
   populateCurrentDisplay(btn);
 }));
@@ -160,3 +178,5 @@ operatorButtons.forEach(btn => btn.addEventListener("click", () => {
 equalsButton.addEventListener("click", calculateEquation);
 clearButton.addEventListener("click", clearCalculator);
 delButton.addEventListener("click", deleteNumber);
+pointButton.addEventListener("click", disablePointButton);
+displayYear();
