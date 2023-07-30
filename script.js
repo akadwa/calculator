@@ -18,7 +18,6 @@ let currentDisplayValue = 0;
 let result;
 
 
-
 // Basic Math Operation Functions
 const add = (num1, num2) => {
   return num1 + num2;
@@ -57,42 +56,42 @@ const operate = (operator, num1, num2) => {
 currentDisplay.innerHTML = currentDisplayValue;
 
 // populateCurrentDisplay - displays the numbers clicked on by the user, in the current display
-const populateCurrentDisplay = (button) => {
-  if (currentDisplayValue === 0 && button.value === "0") {
+const populateCurrentDisplay = (value) => {
+  if (currentDisplayValue === 0 && value === "0") {
     currentDisplayValue = 0;
   } else if (operand1 !== undefined && operator === undefined) {
     operand1 = undefined;
     operator = undefined;
     operand2 = undefined;
-  } else if (currentDisplayValue === 0 && button.value === ".") {
-    currentDisplayValue += button.value;
+  } else if (currentDisplayValue === 0 && value === ".") {
+    currentDisplayValue += value;
   } else if (currentDisplayValue === 0 || (result !== undefined && currentDisplay.innerHTML === result.toString())) {
     currentDisplay.innerHTML = "";
-    currentDisplayValue = button.value;
+    currentDisplayValue = value;
   } else {
-    currentDisplayValue += button.value;
+    currentDisplayValue += value;
   }
 
   currentDisplay.innerHTML = currentDisplayValue;
 }
 
 // populatePreviousDisplay - moves the numbers from the current display into the previous display, sets that number as operand1 and then readies the current display for operand2 to be inputted
-const populatePreviousDisplay = (button) => {
+const populatePreviousDisplay = (value) => {
   if (previousDisplay.innerHTML === "&nbsp;" || operand1 === undefined) {
-    previousDisplay.innerHTML = `${currentDisplayValue} ${button.value}`;
+    previousDisplay.innerHTML = `${currentDisplayValue} ${value}`;
     operand1 = Number(currentDisplay.innerHTML);
-    operator = button.value;
+    operator = value;
     currentDisplayValue = 0;
     pointButton.disabled = false;
   } else if (previousDisplay.innerHTML === `${operand1} ${operator} ${operand2} =` || operator === undefined || result) {
     if (currentDisplay.innerHTML === result.toString()) {
-      previousDisplay.innerHTML = `${result} ${button.value}`;
+      previousDisplay.innerHTML = `${result} ${value}`;
       pointButton.disabled = false;
     } else {
-      previousDisplay.innerHTML = `${currentDisplayValue} ${button.value}`;
+      previousDisplay.innerHTML = `${currentDisplayValue} ${value}`;
     }
     operand1 = Number(currentDisplay.innerHTML);
-    operator = button.value;
+    operator = value;
     currentDisplayValue = 0;
     pointButton.disabled = false;
   }
@@ -166,13 +165,13 @@ const displayYear = () => {
 }
 
 
-// EventListeners
+// Click Event Listeners
 numberButtons.forEach(btn => btn.addEventListener("click", () => {
-  populateCurrentDisplay(btn);
+  populateCurrentDisplay(btn.value);
 }));
 
 operatorButtons.forEach(btn => btn.addEventListener("click", () => {
-  populatePreviousDisplay(btn);
+  populatePreviousDisplay(btn.value);
 }));
 
 equalsButton.addEventListener("click", calculateEquation);
@@ -180,3 +179,53 @@ clearButton.addEventListener("click", clearCalculator);
 delButton.addEventListener("click", deleteNumber);
 pointButton.addEventListener("click", disablePointButton);
 displayYear();
+
+
+// Keyboard Event Listeners
+document.addEventListener("keyup", (e) => {
+  if ((e.key >= 0 && e.key <= 9) || e.key === '.') {
+    populateCurrentDisplay(e.key)
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  let value;
+
+  if (e.key === '+') {
+    value = '+';
+    populatePreviousDisplay(value);
+  } else if (e.key === '-') {
+    value = '-';
+    populatePreviousDisplay(value);
+  } else if (e.key === '*') {
+    value = 'x';
+    populatePreviousDisplay(value);
+  } else if (e.key === '/') {
+    value = '÷';
+    populatePreviousDisplay(value);
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key === 'Enter') {
+    calculateEquation();
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key === 'Escape') {
+    clearCalculator();
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key === 'Backspace') {
+    deleteNumber();
+  }
+});
+
+document.addEventListener("keyup", (e) => {
+  if (e.key === '.') {
+    disablePointButton();
+  }
+});

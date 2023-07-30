@@ -11,6 +11,7 @@ This is a simple calculator web application built using HTML, CSS, and JavaScrip
 - Addition, subtraction, multiplication, and division operations
 - Clear button to reset the calculator
 - Delete button to remove a single, inputted number
+- Keyboard support for number input and operations
 
 ## Technologies Used
 
